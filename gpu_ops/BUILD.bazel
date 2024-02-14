@@ -1,0 +1,74 @@
+load("@tsl//tsl:tsl.bzl", pybind_extension = "tsl_pybind_extension_opensource")
+load("@local_config_cuda//cuda:build_defs.bzl", "cuda_library")
+
+cc_library(
+    name = "kernels",
+    hdrs = ["kernels.h"],
+    copts = [
+        "-fexceptions",
+        "-fno-strict-aliasing",
+    ],
+    features = ["-use_header_modules"],
+    deps = [
+        "@local_config_cuda//cuda:cuda_headers",
+    ],
+)
+
+cc_library(
+    name = "kernel_helpers",
+    hdrs = ["kernel_helpers.h"],
+    copts = [
+        "-fexceptions",
+        "-fno-strict-aliasing",
+    ],
+    features = ["-use_header_modules"],
+    deps = [
+        "@local_config_cuda//cuda:cuda_headers",
+    ],
+)
+
+cc_library(
+    name = "kernel_nanobind_helpers",
+    hdrs = ["kernel_nanobind_helpers.h"],
+    copts = [
+        "-fexceptions",
+        "-fno-strict-aliasing",
+    ],
+    features = ["-use_header_modules"],
+    deps = [
+        ":kernels",
+        "@nanobind",
+    ],
+)
+
+cuda_library(
+    name = "rms_norm_kernels_impl",
+    srcs = [
+        "rms_norm_kernels.cu.cc",
+    ],
+    deps = [
+        ":kernel_nanobind_helpers",
+        ":kernels",
+        "@local_config_cuda//cuda:cuda_headers",
+    ],
+)
+
+pybind_extension(
+    name = "gpu_ops",
+    srcs = ["gpu_ops.cpp"],
+    copts = [
+        "-fexceptions",
+        "-fno-strict-aliasing",
+        # "--cuda_log"
+    ],
+    enable_stub_generation = True,
+    features = ["-use_header_modules"],
+    module_name = "gpu_ops",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":kernel_nanobind_helpers",
+        ":kernels",
+        "@local_config_cuda//cuda:cudart",
+        "@nanobind",
+    ],
+)
