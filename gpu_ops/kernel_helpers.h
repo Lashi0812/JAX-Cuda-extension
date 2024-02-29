@@ -31,8 +31,11 @@ bit_cast(const From &src) noexcept {
   return dst;
 }
 
-template <typename T> std::string PackDescriptorAsString(const T &descriptor) {
-  return std::string(bit_cast<const char *>(&descriptor), sizeof(T));
+// template <typename T> std::string PackDescriptorAsString(const T &descriptor) {
+template <typename T> const char * PackDescriptorAsString(const T &descriptor) {
+  // return std::string(bit_cast<const char *>(&descriptor), sizeof(T));
+  return bit_cast<const char *>(&descriptor);
+
 }
 
 template <typename T>

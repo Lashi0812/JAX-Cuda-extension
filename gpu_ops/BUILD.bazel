@@ -46,6 +46,7 @@ cuda_library(
     srcs = [
         "rms_norm_kernels.cu.cc",
     ],
+    hdrs = ["kernel_helpers.h"],
     deps = [
         ":kernel_nanobind_helpers",
         ":kernels",
@@ -61,12 +62,14 @@ pybind_extension(
         "-fno-strict-aliasing",
         # "--cuda_log"
     ],
+    hdrs = ["kernel_helpers.h","kernel_nanobind_helpers.h"],
     enable_stub_generation = True,
     features = ["-use_header_modules"],
     module_name = "gpu_ops",
     visibility = ["//visibility:public"],
     deps = [
         ":kernel_nanobind_helpers",
+        ":rms_norm_kernels_impl",
         ":kernels",
         "@local_config_cuda//cuda:cudart",
         "@nanobind",
