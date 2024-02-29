@@ -1,18 +1,20 @@
-name: build  # Name of the conda environment
+name: nlp  # Name of the conda environment
 channels:
   - defaults
   - conda-forge
   - pytorch
 dependencies:
-  - python=3.10
+  - python ==3.10
   - ipykernel
   - ipywidgets
+  - pandas
   - numpy
   - matplotlib
-  - pandas
   - pytorch
   - cpuonly
-  - typer[all]
-  # - pip:  
-  #   - jax[cuda12_pip]
-  #   - --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+  - sympy
+  - pip:  
+    - graphviz
+    - flax
+    - jax[cuda12_pip]==0.4.23 
+    - --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html

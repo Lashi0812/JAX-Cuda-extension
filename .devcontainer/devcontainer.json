@@ -18,7 +18,8 @@
                 "BazelBuild.vscode-bazel",
                 "yzhang.markdown-all-in-one",
                 "tamasfe.even-better-toml",
-                "StackBuild.bazel-stack-vscode"
+                "StackBuild.bazel-stack-vscode",
+                "ms-toolsai.jupyter"
             ]
         }
     },

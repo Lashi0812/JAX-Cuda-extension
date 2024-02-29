@@ -13,7 +13,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
                    zsh \
                    ca-certificates \
                    unzip \
-                   clang 
+                   clang \
+                   graphviz
 
 # instal conda 
 RUN mkdir ~/miniconda3 && \
